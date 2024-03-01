@@ -13,7 +13,8 @@ from PIL import Image, ImageDraw, ImageFont
 import os
 import time
 import sys
-from pygame import mixer #you will need pygame in order to play the music, just a FYI
+import json
+
 
 # extracts the frames from the animated gif, 
 # takes in an allready open gif and returns an list of new image objects, one for each
@@ -83,7 +84,10 @@ def convert_image_to_ascii(image):
             for i in range(len(weights)):
                 if abs(weights[i] - w) <= abs(wf - w):
                     wf = weights[i]; k = i
-            output+=chr(k + 32)
+            if chr(k + 32) == 'H':
+                output+='p'
+            else:
+                output+=chr(k + 32)
         output+="\n"
     return output
     
@@ -112,25 +116,18 @@ def animate_ascii(ascii_frames, frame_pause=.02, num_iterations=15, clear_prev_f
             time.sleep(frame_pause)
             if clear_prev_frame:                
                 os.system('cls')
- 
 
 
-#this function takes in the file name of a song and uses pygame to play it,
-#ok, admittedly it's not the best solution, but I had the libraries allready installed
-#and it was a quick way to get music into the project. 
-def start_music(musicFileName):
-    mixer.init()
-    mixer.music.load(musicFileName)
-    mixer.music.play()
-    
-
-im = Image.open("carlton.gif")
+im = Image.open("image.gif")
 frames = extract_gif_frames(im, fillEmpty=True)
 
 #defines how much sensitivity it has while looking for weights. Change to see the effects.
-intensity_multiplier = 4
+intensity_multiplier = 2
 
 ascii_frames = convert_frames_to_ascii(frames)
-start_music("song.mp3")
-time.sleep(11)#I like the idea of carlton poping up just as Tom Jones starts singing, so we delay the animation a bit.
-animate_ascii(ascii_frames, num_iterations=200)
+
+with open("animation.json", 'w') as out_file:
+    out = json.dumps(ascii_frames)
+    out_file.write(out)
+
+animate_ascii(ascii_frames)

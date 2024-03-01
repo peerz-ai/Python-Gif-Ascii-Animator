@@ -1,20 +1,37 @@
-# Python-Gif-Ascii-Animator
-This project intends to convert an animated gif into an ascii representation and print this representation into the console. 
+# Python-Gif-Ascii-Animator with JSON Generation
 
-This is just a fun side project I decided to do one afternoon. It started as me trying to make a progress bar on the command line and it....evolved....into something really cool!
+This project is a creative fork aimed at converting animated GIFs into ASCII representations, with an added twist: it now supports JSON generation for implementation in React components. This enhancement builds upon the original concept of animating ASCII art in the console, turning it into a versatile tool for web development projects.
 
-This project can take any animated gif extract the frames as seperate images, turn those images into ascii string representations of the image and then print these onto the console.
-In short it make a cool little animation.
+Originally inspired by a fun side project to create a command line progress bar, this endeavor has evolved into something much more intriguing. It allows for any animated GIF to be broken down into separate frames, transformed into ASCII strings, and now, with the new feature, exported as JSON data. This data can easily be incorporated into a React component, enabling the creation of unique web animations.
 
-I also decided to add sound to the project using pygame's mixer, so if you want to include sound you will need to install pygame.
+## How to Implement the JSON in a React Component
 
-Want to see this project in action? check it out: https://www.youtube.com/watch?v=yt2Bw4FXXVA
-...I may have gone a little crazy....
+To use the generated JSON in a React component, follow this simple example:
 
+```jsx
+import React, { useState, useEffect } from 'react';
 
+const AsciiAnimation = ({ jsonData }) => {
+  const [frame, setFrame] = useState(0);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFrame(currentFrame => (currentFrame + 1) % jsonData.length);
+    }, 100); // Adjust frame rate as needed
 
+    return () => clearInterval(interval);
+  }, [jsonData.length]);
 
-side note: I want to give credit where credit is due, I found a very good snippet of code online that does the bulk of the image to
-ascii conversion and rather than try to continue developing my own(very ugly) solution I decided to include theirs.
-the code found in the convert_image_to_ascii function was based on the code found here: http://code.activestate.com/recipes/580702-image-to-ascii-art-converter/
+  return (
+    <pre>
+      {jsonData[frame]}
+    </pre>
+  );
+};
+
+export default AsciiAnimation;
+```
+
+This example component cycles through the ASCII frames stored in the JSON array, creating a simple but effective animation. Implement this component within your React app to add a unique ASCII animation touch.
+
+Lastly, I want to reiterate my thanks to the original project creator, [insert original creator's name or username here], and all contributors who have made both the initial project and this fork possible. Your efforts have allowed us to explore new and exciting ways to bring ASCII art to life, bridging the gap between classic art forms and modern web technology.
