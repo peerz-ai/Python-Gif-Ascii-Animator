@@ -34,4 +34,4 @@ export default AsciiAnimation;
 
 This example component cycles through the ASCII frames stored in the JSON array, creating a simple but effective animation. Implement this component within your React app to add a unique ASCII animation touch.
 
-Lastly, I want to reiterate my thanks to the original project creator, [insert original creator's name or username here], and all contributors who have made both the initial project and this fork possible. Your efforts have allowed us to explore new and exciting ways to bring ASCII art to life, bridging the gap between classic art forms and modern web technology.
+While the original project included sound capabilities through pygame's mixer, this fork has removed that feature in favor of focusing on visual representation and web integration. Thanks to the original creator [@tpoff](https://github.com/tpoff), for their foundational work on this project.
